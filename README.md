@@ -111,6 +111,20 @@ High-risk segments:
 Overall churn rate: **26.5%**
 
 ---
+##  Visualizations
+
+### Churn Distribution
+![Churn](images/churn_distribution.png)
+
+### Tenure Analysis
+![Tenure](images/tenure_analysis.png)
+
+### Contract vs Churn
+![Contract](images/contract_type.png)
+
+### Key Segments
+![Key_Segments](images/key_segments.png)
+
 
 ##  Business Recommendations
 
