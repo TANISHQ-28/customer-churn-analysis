@@ -1,114 +1,58 @@
-#  Customer Churn Analysis & Insights (Telco Dataset)
+# Customer Churn Analysis (Telco Dataset)
 
-##  Project Overview
-
-I built this project to understand why customers leave a service and to practice turning raw data into business decisions.
-
-The focus is on identifying high-risk segments and generating actionable insights rather than just predicting churn.
----
-
-##  Business Objective
-
-* Identify **key drivers of churn**
-* Detect **high-risk customer segments**
-* Provide **data-driven recommendations** to improve retention
+i did this project to understand why customers leave a telecom company and to get some hands on practice with real data. most tutorials just focus on building models but i wanted to focus more on actually understanding the data and finding patterns that make business sense.
 
 ---
 
-##  Dataset Details
+## what is this project about
 
-* Dataset: Telco Customer Churn (IBM Sample Dataset)
-* Source: Kaggle
-* Records: **7043 customers**
-* Features: **21 columns** including:
-
-  * Customer demographics
-  * Service usage (Internet, Streaming, etc.)
-  * Account information (tenure, contract type)
-  * Billing details (monthly & total charges)
-  * Target variable: **Churn (Yes/No)**
+basically the idea is - a telecom company is losing customers and wants to know why. so i took a real dataset (around 7000 customers) and tried to figure out which type of customers are leaving and what might be causing it.
 
 ---
 
-##  Tech Stack
+## dataset
 
-* **Python**
-* **Pandas & NumPy** – data manipulation
-* **Matplotlib & Seaborn** – data visualization
-* **Jupyter Notebook**
-
----
-
-##  Data Cleaning & Preparation
-
-* Converted `TotalCharges` from string → numeric
-* Handled missing values using coercion + filling
-* Created **Churn_Binary (1/0)** for analysis
-* Engineered readable features like:
-
-  * `SeniorCitizen_Label`
+- Telco Customer Churn dataset from Kaggle (IBM sample data)
+- 7043 rows, 21 columns
+- has info like how long the customer has been with the company, what plan they are on, monthly charges, whether they use fiber/DSL, and whether they churned or not
 
 ---
 
-##  Exploratory Data Analysis (EDA)
+## tools used
 
-###  Overall Churn
-
-* **26.5% customers churned (1869 out of 7043)**
-* Indicates a significant business problem
-
----
-
-###  Tenure Analysis
-
-* Avg tenure (Churned): **18.0 months**
-* Avg tenure (Retained): **37.6 months**
-*  **Insight:** Highest churn occurs in the **first 1–5 months**
+- Python
+- Pandas, NumPy
+- Matplotlib, Seaborn
+- Jupyter Notebook
+- Scikit-learn (for the ml part)
 
 ---
 
-###  Pricing Impact
+## what i did
 
-* Avg monthly charge (Churned): **$74.44**
-* Avg monthly charge (Retained): **$61.27**
-*  **Insight:** Higher-paying customers are more likely to churn
+**data cleaning**
+- TotalCharges column was stored as text for some reason, had to convert it to numeric
+- 11 rows had blank values in TotalCharges (turned out these were brand new customers with 0 tenure), filled them with 0
+- converted Churn column from Yes/No to 1/0 so i could do calculations on it
 
----
+**EDA**
+made charts to answer specific questions like:
+- how many customers actually churned? (ans: 26.5%, which is a lot)
+- do new customers leave more? yes, avg tenure of churned customers is 18 months vs 37 months for people who stayed
+- does contract type matter? massively - month to month customers churn at 43%, 2 year contract customers at just 3%
+- do higher charges cause churn? yes, churned customers pay around $74/month vs $61 for retained ones
+- senior citizens churn at almost double the rate of younger customers
 
-###  Contract Type
+one thing that surprised me was fiber optic users had the highest churn (~42%) even though its a better service. probably because its also more expensive and people dont feel its worth it.
 
-* Month-to-month customers have **highest churn rate**
-* Long-term contracts significantly reduce churn
-*  **Insight:** Contract commitment improves retention
+**machine learning**
+tried 4 models to see if we can predict churn:
+- Logistic Regression
+- Decision Tree (max_depth=5)
+- Random Forest
+- KNN (k=5)
 
----
-
-###  Internet Service
-
-* **Fiber optic users churn the most (~42%)**
-*  **Insight:** High price or service expectations may not be met.
-  
- One interesting observation was that fiber optic users had the highest churn (~42%), which initially seemed counterintuitive since it's a premium service. This suggests a gap between pricing and perceived value.
-
----
-
-###  Customer Demographics
-
-* Senior citizens churn at **~2x higher rate**
-* Gender shows **no significant impact**
-
----
-
-##  Key Findings Summary
-
-High-risk segments:
-
-* Customers with **tenure < 6 months**
-* **Month-to-month contracts**
-* **Fiber optic users**
-* **Senior citizens**
-
-Overall churn rate: **26.5%**
+random forest gave the best results. also the feature importance from RF confirmed what i found in EDA - tenure and monthly charges are the biggest factors.
 
 ---
 ##  Visualizations
@@ -125,53 +69,47 @@ Overall churn rate: **26.5%**
 ### Key Segments
 ![Key_Segments](images/key_segments.png)
 
+## main findings
 
-##  Business Recommendations
-
-1. Encourage **long-term contracts** with discounts
-2. Improve **early-stage onboarding (first 3 months)**
-3. Introduce **pricing optimization / mid-tier plans**
-4. Investigate **fiber optic service quality & support**
-5. Provide **dedicated support for senior citizens**
-
----
-
-##  Key Learning Outcomes
-
-* Real-world data cleaning challenges
-* Feature engineering for analysis
-* Business-driven EDA approach
-* Translating data insights into actionable strategies
+- month to month contract customers = highest churn risk
+- customers in first 6 months = most likely to leave
+- higher monthly charges = more likely to churn
+- senior citizens churn at nearly 2x rate
+- gender has almost no effect on churn
 
 ---
 
-## Challenges Faced
+## what the company can actually do about it
 
-* The `TotalCharges` column was stored as text and required careful conversion to numeric while handling missing values.
-* Interpreting business meaning from raw patterns (not just plotting graphs) was a key learning step.
+1. give discounts to push people from monthly to yearly plans
+2. check in with new customers in the first 3 months before they decide to leave
+3. look into why fiber optic users are unhappy, is it the price or the service quality
+4. create simpler plans for senior citizens
 
 ---
 
-##  How to Run
+## how to run
 
-```bash
+```
 git clone https://github.com/your-username/customer-churn-analysis.git
 cd customer-churn-analysis
 jupyter notebook
 ```
 
----
-
-##  Project Highlights
-
-* End-to-end data analysis workflow
-* Strong focus on **business insights (not just code)**
-* Uses real-world telecom dataset
-* Clear storytelling with data
+then open `customer_churn_analysis.ipynb` and run all cells. make sure the CSV file is in the same folder.
 
 ---
 
-##  Author
+## what i learned
 
-**Tanishq Soni**
-Aspiring Data Scientist
+- raw data is always messy, cleaning takes more time than expected
+- accuracy alone is not a good metric when classes are imbalanced, f1 score matters more
+- the EDA part is actually more useful than the model sometimes, just looking at the data tells you a lot
+- its important to think about what the numbers mean for the business, not just plot graphs
+
+---
+
+made by Tanishq Soni
+
+
+
